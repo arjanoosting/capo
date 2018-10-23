@@ -92,6 +92,10 @@ CAPO.weathermaps = CAPO.weathermaps || {};
         $('#selected-wmaps-placeholder').remove();
 
         var wmap_tpl = ns.html.selected_wmap_item();
+        var hlink_uri = wmap.cacti_instance.base_url + 'plugins/weathermap/weathermap-cacti-plugin.php?action=viewmap&id=' + wmap.filehash;
+        if (wmap.cacti_instance.version !== null && wmap.cacti_instance.version.match(/^1\./)) {
+            hlink_uri = wmap.cacti_instance.base_url + 'plugins/weathermap/weathermap-cacti10-plugin.php#/map/' + wmap.filehash;
+        }
 
         $('#selected-wmaps-list').append(
             wmap_tpl({
