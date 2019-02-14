@@ -21,7 +21,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "escapestudios/wsse-authentication-bundle": "dev-sf30",
-        "fr3d/ldap-bundle": "2.0.0",
+        "fr3d/ldap-bundle": "3.0.0",
         "components/jquery": "1.11.*",
         "components/underscore": "dev-master",
         "itbz/fpdf": "dev-master",
