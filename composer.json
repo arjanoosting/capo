@@ -26,9 +26,9 @@
         "components/underscore": "dev-master",
         "itbz/fpdf": "dev-master",
         "ivaynberg/select2": ">=3.5.1,<3.6.0",
-        "spinjs": "2.0.1",
-        "select2-bootstrap": "1.4.4",
-        "jscrolljs": "2.2.4",
+        "spinjs/spinjs": "2.0.1",
+        "select2-bootstrap/select2-bootstrap": "1.4.4",
+        "jscrolljs/jscrolljs": "2.2.4",
         "components/bootstrap": "^3.3",
         "robloach/component-installer": "^0.2.3",
         "guzzlehttp/guzzle": "^6.2"
@@ -92,7 +92,7 @@
     {
         "type": "package",
         "package": {
-            "name": "spinjs",
+            "name": "spinjs/spinjs",
             "version": "2.0.1",
             "dist": {
                 "url": "https://raw.githubusercontent.com/fgnass/spin.js/8cc98bc0b5bb519a8916064c0704dbfd61c2fd66/spin.js",
@@ -103,7 +103,7 @@
     {
         "type": "package",
         "package": {
-            "name": "select2-bootstrap",
+            "name": "select2-bootstrap/select2-bootstrap",
             "version": "1.4.4",
             "dist": {
                 "url": "https://raw.githubusercontent.com/t0m/select2-bootstrap-css/ddce1a12eea333b28069df1e2e63db146a01a69e/select2-bootstrap.css",
@@ -114,16 +114,12 @@
     {
         "type": "package",
         "package": {
-            "name": "jscrolljs",
+            "name": "jscrolljs/jscrolljs",
             "version": "2.2.4",
             "dist": {
                 "url": "https://raw.githubusercontent.com/pklauzinski/jscroll/bc31cbb71f92c310c77cc0656d2847b3bd260b29/jquery.jscroll.js",
                 "type": "file"
             }
         }
-    },
-    {
-        "type": "vcs",
-        "url": "https://github.com/xelaris/EscapeWSSEAuthenticationBundle"
     }]
 }
