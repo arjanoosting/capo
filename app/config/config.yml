@@ -71,6 +71,7 @@ fr3d_ldap:
         accountFilterFormat: '(&(sAMAccountName=%%s))'
     user:
         baseDn: "%ldap_basedn%"
+        usernameAttribute: sAMAccountName
         filter: (&(ObjectClass=user))
         attributes:          # Specify ldap attributes mapping [ldap attribute, user object method]
             - { ldap_attr: samaccountname,  user_method: setUsername } # Default
@@ -92,5 +93,3 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-
