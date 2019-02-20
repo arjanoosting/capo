@@ -10,7 +10,7 @@
         "php": "7.2.*",
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "~2.3",
-        "doctrine/doctrine-bundle": "~1.4",
+        "doctrine/doctrine-bundle": "~1.1",
         "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
@@ -65,7 +65,10 @@
     },
     "config": {
         "component-dir": "web/components",
-        "component-baseurl": "components"
+        "component-baseurl": "components",
+        "platform": {
+            "php": "7.2"
+        }
     },
     "extra": {
         "symfony-app-dir": "app",
