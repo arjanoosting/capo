@@ -25,7 +25,7 @@ CAPO.graphs = CAPO.graphs || {};
     "use strict";
     var _scroller = null;
     var _filter_prev = '';
-    var _max_select_all = 25;
+    var _max_select_all = 50;
     var _graph_pool = [];
     var _cur_saved_selection = [];
     var _rra_id;
@@ -140,13 +140,13 @@ CAPO.graphs = CAPO.graphs || {};
                 data: function(term, page) {
                     return {
                         q: term,
-                        page_limit: 25,
+                        page_limit: 50,
                         page: page
                     };
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 25) < data.cacti_instances_total;
+                    var more = (page * 50) < data.cacti_instances_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
@@ -179,13 +179,13 @@ CAPO.graphs = CAPO.graphs || {};
                 data: function(term, page) {
                     return {
                         q: term,
-                        page_limit: 25,
+                        page_limit: 50,
                         page: page
                     };
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 25) < data.graph_selections_total;
+                    var more = (page * 50) < data.graph_selections_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
@@ -248,14 +248,14 @@ CAPO.graphs = CAPO.graphs || {};
                 data: function(term, page) {
                     return {
                         q: term,
-                        page_limit: 25,
+                        page_limit: 50,
                         page: page,
                         cacti_instance: $('#cacti-instance-select').val()
                     };
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 25) < data.graph_templates_total;
+                    var more = (page * 50) < data.graph_templates_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
@@ -288,14 +288,14 @@ CAPO.graphs = CAPO.graphs || {};
                 data: function(term, page) {
                     return {
                         q: term,
-                        page_limit: 25,
+                        page_limit: 50,
                         page: page,
                         cacti_instance: $('#cacti-instance-select').val()
                     };
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 25) < data.hosts_total;
+                    var more = (page * 50) < data.hosts_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
