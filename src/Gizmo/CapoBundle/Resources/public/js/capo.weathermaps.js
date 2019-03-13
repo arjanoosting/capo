@@ -64,13 +64,13 @@ CAPO.weathermaps = CAPO.weathermaps || {};
                 data: function(term, page) {
                     return {
                         q: term,
-                        page_limit: 25,
+                        page_limit: 50,
                         page: page
                     };
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 25) < data.cacti_instances_total;
+                    var more = (page * 50) < data.cacti_instances_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
