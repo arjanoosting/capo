@@ -149,7 +149,7 @@ CAPO.settings.users = CAPO.settings.users || {};
                 },
                 results: function (data, page) {
                     // whether or not there are more results available
-                    var more = (page * 50 < data.groups_total;
+                    var more = (page * 50) < data.groups_total;
 
                     // notice we return the value of more so Select2 knows if
                     // more results can be loaded
