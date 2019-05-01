@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27161422bf7190777b47117c751176e0",
+    "content-hash": "e9b7b903673c07c332b0d563cfd44844",
     "packages": [
         {
             "name": "components/bootstrap",
@@ -4545,7 +4545,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "7.2.*"
+        "php": "7.2.*",
+        "ext-ldap": "*"
     },
     "platform-dev": {
         "ext-pdo_sqlite": "*"

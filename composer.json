@@ -32,7 +32,8 @@
         "jscrolljs/jscrolljs": "2.2.4",
         "components/bootstrap": "^3.3",
         "robloach/component-installer": "^0.2.3",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "ext-ldap": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

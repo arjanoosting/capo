@@ -10,6 +10,11 @@ services:
 env:
   - SYMFONY_VERSION=2.8.*
 
+addons:
+  apt:
+    packages:
+      php-ldap
+
 before_install:
   - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer selfupdate -q
