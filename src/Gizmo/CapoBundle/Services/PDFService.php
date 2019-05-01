@@ -19,7 +19,7 @@
 
 namespace Gizmo\CapoBundle\Services;
 
-class PDFService extends \fpdf\FPDF
+class PDFService extends \FPDF
 {
     protected $_title;
 

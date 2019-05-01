@@ -36,9 +36,9 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "phpunit/phpunit": "~4.6",
+        "phpunit/phpunit": "~6.0",
         "ext-pdo_sqlite": "*",
-        "symfony/phpunit-bridge": "2.8.x"
+        "symfony/phpunit-bridge": "^4.2"
     },
     "scripts": {
         "post-root-package-install": [

@@ -181,8 +181,7 @@ class ApiController extends BaseController
         }
 
         $graph_ids = json_decode($data['graphs']);
-
-        if (count($graph_ids) < 1) {
+        if ($graph_ids === null || count($graph_ids) < 1) {
             return $this->_api_fail(
                 'No graphs given',
                 $format);

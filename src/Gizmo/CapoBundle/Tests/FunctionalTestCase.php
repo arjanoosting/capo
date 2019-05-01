@@ -76,11 +76,17 @@ abstract class FunctionalTestCase extends WebTestCase {
             }
 
             if ($options['zero_result']) {
-                $this->assertEquals(0, $decoded->$options['total_indicator']);
-                $this->assertEquals(0, count($decoded->$options['content_indicator']));
+                $total = $options['total_indicator'];
+                $content = $options['content_indicator'];
+
+                $this->assertEquals(0, $decoded->$total);
+                $this->assertEquals(0, count($decoded->$content));
             } else {
-                $this->assertGreaterThan(0, $decoded->$options['total_indicator']);
-                $this->assertGreaterThan(0, count($decoded->$options['content_indicator']));
+                $total = $options['total_indicator'];
+                $content = $options['content_indicator'];
+
+                $this->assertGreaterThan(0, $decoded->$total);
+                $this->assertGreaterThan(0, count($decoded->$content));
             }
 
             return $decoded;

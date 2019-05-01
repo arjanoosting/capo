@@ -45,7 +45,7 @@ class GraphTest extends UnitTestCase
     public function testGraphTemplate()
     {
         $e = new Graph();
-        $expected = $this->getMock('\\Gizmo\CapoBundle\Entity\GraphTemplate');
+        $expected = $this->createMock('\\Gizmo\CapoBundle\Entity\GraphTemplate');
         $e->setGraphTemplate($expected);
         $result = $e->getGraphTemplate();
         $this->assertSame($expected, $result);
@@ -55,7 +55,7 @@ class GraphTest extends UnitTestCase
     public function testCactiInstance()
     {
         $e = new Graph();
-        $expected = $this->getMock('\\Gizmo\CapoBundle\Entity\CactiInstance');
+        $expected = $this->createMock('\\Gizmo\CapoBundle\Entity\CactiInstance');
         $e->setCactiInstance($expected);
         $result = $e->getCactiInstance();
         $this->assertSame($expected, $result);
@@ -65,7 +65,7 @@ class GraphTest extends UnitTestCase
     public function testHost()
     {
         $e = new Graph();
-        $expected = $this->getMock('\\Gizmo\CapoBundle\Entity\Host');
+        $expected = $this->createMock('\\Gizmo\CapoBundle\Entity\Host');
         $e->setHost($expected);
         $result = $e->getHost();
         $this->assertSame($expected, $result);

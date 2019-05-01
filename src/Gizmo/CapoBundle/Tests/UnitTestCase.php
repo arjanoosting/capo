@@ -19,7 +19,9 @@
 
 namespace Gizmo\CapoBundle\Tests;
 
-abstract class UnitTestCase extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+abstract class UnitTestCase extends TestCase {
     public function setUp() {
         parent::setUp();
     }

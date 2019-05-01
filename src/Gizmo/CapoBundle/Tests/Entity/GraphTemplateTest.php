@@ -45,7 +45,7 @@ class GraphTemplateTest extends UnitTestCase
     public function testCactiInstance()
     {
         $e = new GraphTemplate();
-        $expected = $this->getMock('\\Gizmo\CapoBundle\Entity\CactiInstance');
+        $expected = $this->createMock('\\Gizmo\CapoBundle\Entity\CactiInstance');
         $e->setCactiInstance($expected);
         $result = $e->getCactiInstance();
         $this->assertSame($expected, $result);
