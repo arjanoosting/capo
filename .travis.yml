@@ -10,6 +10,8 @@ services:
 env:
   - SYMFONY_VERSION=2.8.*
 
+dist: xenial
+
 addons:
   apt:
     packages:
