@@ -39,8 +39,8 @@ abstract class BaseEntityRepository extends EntityRepository
      */
     protected function _getStdQueryBuilder(Array $data, $entity_identifier='e')
     {
-        $limit = 50;
-        $max_limit = 100;
+        $limit = 100;
+        $max_limit = 120;
         $page = 1;
 
         $q = $this->createQueryBuilder($entity_identifier);
