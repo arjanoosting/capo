@@ -10,9 +10,6 @@ web_profiler:
     toolbar: false
     intercept_redirects: false
 
-swiftmailer:
-    disable_delivery: true
-
 doctrine:
     dbal:
         driver:   pdo_sqlite
@@ -30,11 +27,6 @@ security:
     firewalls:
         main:
             security: false
-
-fr3d_ldap:
-    driver: ~
-    user: ~
-    service: ~
 
 parameters:
     enable_eventlog: no

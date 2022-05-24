@@ -78,7 +78,7 @@ class UserRepository extends BaseEntityRepository
         }
 
         if (isset($data['q'])) {
-            $q->andWhere('e.username LIKE :query OR e.usernameCanonical LIKE :query OR g.name LIKE :query');
+            $q->andWhere('e.username LIKE :query OR g.name LIKE :query');
             $q->setParameter('query', '%' . $data['q'] . '%');
         }
 

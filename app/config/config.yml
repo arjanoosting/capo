@@ -55,41 +55,14 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
-fr3d_ldap:
-    driver:
-        host:         "%ldap_host%"
-        useStartTls:  false # Enable TLS negotiation. Optional
-        port:         389    # Optional
-        username:    "%ldap_user%"
-        password:    "%ldap_password%"
-#       username:     foo    # Optional
-#       password:     bar    # Optional
-        optReferrals: false  # Optional
-        useSsl:       false   # Enable SSL negotiation. Optional
-#       useStartTls:  true   # Enable TLS negotiation. Optional
-        bindRequiresDn: true
-        accountFilterFormat: '(&(sAMAccountName=%%s))'
-    user:
-        baseDn: "%ldap_basedn%"
-        usernameAttribute: sAMAccountName
-        filter: (&(ObjectClass=user))
-        attributes:          # Specify ldap attributes mapping [ldap attribute, user object method]
-            - { ldap_attr: samaccountname,  user_method: setUsername } # Default
-            - { ldap_attr: distinguishedname,  user_method: setLdapGroup }
-#           - { ldap_attr: cn,   user_method: setName }     # Optional
-#           - { ldap_attr: ...,  user_method: ... }         # Optional
-    service:
-        ldap_manager: fr3d_ldap.ldap_manager.default # Overrides default ldap manager
-
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Gizmo\CapoBundle\Entity\User
-
-# Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+ldap_tools:
+    security:
+        user: Gizmo\CapoBundle\Entity\User
+        refresh_user_roles: true
+    domains:
+        ad:
+            domain_name: "%ldap_domain_name%"
+            username: "%ldap_user%"
+            password: "%ldap_password%"
+            base_dn: "%ldap_basedn%"
+            servers: ["%ldap_host%"]

@@ -22,6 +22,3 @@ monolog:
 assetic:
     use_controller: true
     bundles: [GizmoCapoBundle]
-
-#swiftmailer:
-#    delivery_address: me@example.com

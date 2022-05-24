@@ -55,15 +55,14 @@ class FixtureLoader implements FixtureInterface
 
         $users = Array();
         $users_desc = Array(
-            0 => Array('testuser', 'test@email.disabled', 'testpass', 0),
-            1 => Array('testuser2', 'test2@email.disabled', 'testpass2', 0)
+            0 => Array('testuser', '4880d5b9-2cb5-4836-8818-ee0168976721', 'testpass', 0),
+            1 => Array('testuser2', '4f166f24-b668-42f8-9051-cb949d5720cd', 'testpass2', 0)
         );
         
         foreach ($users_desc as $ud) {
             $u = new User;
             $u->setUserName($ud[0]);
-            $u->setEmail($ud[1]);
-            $u->setPassword($ud[2]);
+            $u->setLdapGuid($ud[1]);
             $u->setLdapGroup('dn: CN=Test f User,OU=OS\, Security & Applications,OU=Users,OU=Company,DC=domain,DC=local');
             $u->setGroup($groups[$ud[3]]);
             $u->setEnabled(true);

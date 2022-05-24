@@ -24,15 +24,6 @@ use Gizmo\CapoBundle\Entity\User;
 
 class UserTest extends UnitTestCase
 {
-    public function testId()
-    {
-        $e = new User();
-        $expected = 347892;
-        $e->setId($expected);
-        $result = $e->getId();
-        $this->assertSame($expected, $result);
-    }
-
     public function testDn()
     {
         $e = new User();

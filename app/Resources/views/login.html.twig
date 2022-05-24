@@ -1,19 +1,17 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'GizmoCapoBundle::base.html.twig' %}
 
-{% block fos_user_content %}
+{% block contents %}
 {% if error %}
 <div class="alert alert-error"><strong>ERROR:</strong> {{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
 
 <h1 class="col-sm-offset-2 col-sm-10">Login</h1>
 
-<form role="form" action="{{ path("fos_user_security_check") }}" method="post" class="form col-sm-offset-2 col-sm-5">
+<form role="form" action="{{ path("login_check") }}" method="post" class="form col-sm-offset-2 col-sm-5">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
     <div class="form-group">
-        <label class="control-label" for="username">
-            {{ 'security.login.username'|trans({}, 'FOSUserBundle') }}
-        </label>
+        <label class="control-label" for="username">Username</label>
 
         <div class="input-group">
             <span class="input-group-addon">
@@ -24,9 +22,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label" for="password">
-            {{ 'security.login.password'|trans({}, 'FOSUserBundle') }}
-        </label>
+        <label class="control-label" for="password">Password</label>
         
         <div class="input-group">
             <span class="input-group-addon">
@@ -37,16 +33,7 @@
     </div>
 
     <div class="form-group">
-        <div class="checkbox">
-            <label for="remember_me">
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on">
-                {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
-            </label>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+        <button class="btn btn-primary" type="submit" id="_submit" name="_submit">Login</button>
     </div>
 </form>
-{% endblock fos_user_content %}
+{% endblock contents %}

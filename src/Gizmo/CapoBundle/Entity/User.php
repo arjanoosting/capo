@@ -19,16 +19,17 @@
 
 namespace Gizmo\CapoBundle\Entity;
 
-use FR3D\LdapBundle\Model\LdapUserInterface;
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use LdapTools\Bundle\LdapToolsBundle\Security\User\LdapUserInterface;
+use LdapTools\Object\LdapObject;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Gizmo\CapoBundle\Entity\UserRepository")
  * @ORM\Table(name="fos_user")
  */
-class User extends BaseUser implements LdapUserInterface
+class User implements UserInterface, LdapUserInterface
 {
     /**
      * @var ArrayCollection $graph_selections
@@ -55,10 +56,42 @@ class User extends BaseUser implements LdapUserInterface
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=180)
+     */
+    protected $username;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    protected $enabled;
+
+    /**
      * Ldap Object Distinguished Name
      * @var string $dn
      */
     protected $dn;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $ldapGuid;
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var array
+     */
+    protected $roles;
+
+    /**
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     * @var \DateTime|null
+     */
+    protected $lastLogin;
 
     /**
      * @var string $ldap_group
@@ -69,13 +102,20 @@ class User extends BaseUser implements LdapUserInterface
 
     public function __construct()
     {
-        parent::__construct();
+        $this->enabled = false;
+        $this->roles = array();
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->getUsername();
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -83,12 +123,75 @@ class User extends BaseUser implements LdapUserInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Set ldapGuid
+     *
+     * @param string $ldapGuid
+     *
+     * @return AppUser
      */
-    public function setId($id) {
-        $this->id = $id;
+    public function setLdapGuid($ldapGuid)
+    {
+        $this->ldapGuid = $ldapGuid;
 
         return $this;
+    }
+
+    /**
+     * Get ldapGuid
+     *
+     * @return string
+     */
+    public function getLdapGuid()
+    {
+        return $this->ldapGuid;
+    }
+
+    /**
+     * @param array $roles
+     * @return $this
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+
+        //$roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return null
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
     }
 
     /**
@@ -100,6 +203,25 @@ class User extends BaseUser implements LdapUserInterface
     {
         return $this->group;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setEnabled($boolean)
+    {
+        $this->enabled = (bool) $boolean;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
 
     /**
      * Set group
@@ -130,16 +252,20 @@ class User extends BaseUser implements LdapUserInterface
     }
 
     /**
-     * Set Username
-     *
-     * @param String $username
-     * @return User
+     * {@inheritdoc}
      */
     public function setUsername($username) {
         $this->username = $username;
-        $this->email = $username . '@email.disabled';
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     /**
@@ -171,4 +297,28 @@ class User extends BaseUser implements LdapUserInterface
         return $this->ldap_group;
     }
 
+    /**
+     * Gets the last login time.
+     *
+     * @return \DateTime|null
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLastLogin(\DateTime $time = null)
+    {
+        $this->lastLogin = $time;
+
+        return $this;
+    }
+
+    public function updateFromLdapObject(LdapObject $ldapObject)
+    {
+        $this->setEnabled($ldapObject->get('enabled', true));
+    }
 }

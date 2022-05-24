@@ -16,3 +16,15 @@ services:
 
     xml_conversion:
         class:  Gizmo\CapoBundle\Services\XmlConversionService
+
+    load_user_listener:
+        class: Gizmo\CapoBundle\Event\LoadUserEventListener
+        tags:
+            - { name: kernel.event_listener, event: ldap_tools_bundle.load_user.before, method: beforeLoadUser }
+            - { name: kernel.event_listener, event: ldap_tools_bundle.load_user.after, method: afterLoadUser }
+
+    login_listener:
+        class: Gizmo\CapoBundle\Event\LoginEventListener
+        arguments: ['@doctrine.orm.entity_manager', '@ldap_tools.security.user.ldap_user_provider']
+        tags:
+            - { name: kernel.event_listener, event: ldap_tools_bundle.login.success, method: onLoginSuccess }
