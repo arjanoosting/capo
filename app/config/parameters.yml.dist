@@ -20,4 +20,4 @@ parameters:
     ldap_user: ldapuser@domain.local
     ldap_password: jdk1l234iu9dsakl
     ldap_basedn: ou=Company,dc=domain,dc=local
-
+    ldap_domain_name: domain.local
