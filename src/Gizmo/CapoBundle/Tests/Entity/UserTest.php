@@ -41,13 +41,4 @@ class UserTest extends UnitTestCase
         $result = $e->getUsername();
         $this->assertSame($expected, $result);
     }
-
-    public function testSetLdapGroup()
-    {
-        $e = new User();
-        $expected = 'Group A + Group B';
-        $e->setLdapGroup('CN=Pieter Post,OU=Group A \+ Group B,OU=People,OU=Gizmo,DC=org,DC=nl,DC=local');
-        $result = $e->getLdapGroup();
-        $this->assertSame($expected, $result);
-    }
 }

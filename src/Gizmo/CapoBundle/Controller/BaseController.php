@@ -85,11 +85,7 @@ abstract class BaseController extends Controller
                 }
 
                 if ((! $is_api_user) && $group === null) {
-                    $grpname = trim($user->getLdapGroup());
-
-                    if ($grpname === '') {
-                        $grpname = 'default';
-                    }
+                    $grpname = 'default';
 
                     $em = $this->getDoctrine()->getManager();
                     $repo = $em->getRepository('GizmoCapoBundle:Group');

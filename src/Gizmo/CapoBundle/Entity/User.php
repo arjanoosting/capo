@@ -269,35 +269,6 @@ class User implements UserInterface, LdapUserInterface
     }
 
     /**
-     * Set Group from DN
-     *
-     * @param String $dn
-     * @return User
-     */
-    public function setLdapGroup($dn) {
-        $dn_arr = preg_split('/,OU=/', stripslashes($dn));
-        if (count($dn_arr) == 1) {
-            $grpname = str_replace('OU=', '', $dn_arr[0]);
-        } else {
-            $grpname = str_replace('OU=', '', $dn_arr[1]);
-        }
-
-        $this->ldap_group = $grpname;
-
-        return $this;
-    }
-
-    /**
-     * Get LDAP group
-     *
-     * @return String Ldap group
-     */
-    public function getLdapGroup()
-    {
-        return $this->ldap_group;
-    }
-
-    /**
      * Gets the last login time.
      *
      * @return \DateTime|null

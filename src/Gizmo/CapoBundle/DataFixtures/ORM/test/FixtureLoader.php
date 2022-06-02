@@ -63,7 +63,6 @@ class FixtureLoader implements FixtureInterface
             $u = new User;
             $u->setUserName($ud[0]);
             $u->setLdapGuid($ud[1]);
-            $u->setLdapGroup('dn: CN=Test f User,OU=OS\, Security & Applications,OU=Users,OU=Company,DC=domain,DC=local');
             $u->setGroup($groups[$ud[3]]);
             $u->setEnabled(true);
 
