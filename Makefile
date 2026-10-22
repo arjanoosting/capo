@@ -1,6 +1,7 @@
 SHELL=/usr/bin/env bash
 .DEFAULT_GOAL := info
-PHP_REFERENCE := php7.2
+PHP_REFERENCE := php7.4
+COMPOSER := composer2.phar
 COMMANDPREFIX := sudo -u www-data
 DEPLOYMENTDIR := /var/www/capo/
 
@@ -21,11 +22,11 @@ rsync: ## Sync to deployment folder
 install: ## Run composer install
 	@sudo mkdir -p ${DEPLOYMENTDIR}../.cache
 	@sudo chmod 777 ${DEPLOYMENTDIR}../.cache
-	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} composer1.phar install
+	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} ${COMPOSER} install
 	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} app/console assetic:dump --env=prod --no-debug
 
 update: ## Run composer updatre
-	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} composer1.phar update
+	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} ${COMPOSER} update
 	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} app/console assetic:dump --env=prod --no-debug
 
 test: ## Run unit tests

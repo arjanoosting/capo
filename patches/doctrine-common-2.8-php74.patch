@@ -1,0 +1,20 @@
+Make doctrine/common 2.8 quiet on PHP 7.4.
+
+doctrine/common is pinned to 2.8 by doctrine/orm 2.5 (which in turn is pinned
+by Symfony 2.8, see patches/doctrine-orm-2.5-php74.patch). Casting a
+ReflectionType to string is deprecated as of PHP 7.4, and the proxy generator
+does that for every typed parameter and return type it copies into a generated
+proxy class. Read the type name through ReflectionNamedType::getName() instead,
+which is what doctrine/common 2.10 does.
+
+--- a/lib/Doctrine/Common/Proxy/ProxyGenerator.php
++++ b/lib/Doctrine/Common/Proxy/ProxyGenerator.php
+@@ -1040,7 +1040,7 @@
+         \ReflectionMethod $method,
+         \ReflectionParameter $parameter = null
+     ) {
+-        $name = (string) $type;
++        $name = $type instanceof \ReflectionNamedType ? $type->getName() : (string) $type;
+         $nameLower = strtolower($name);
+ 
+         if ('self' === $nameLower) {

@@ -1,0 +1,20 @@
+Stop AsseticExtension from using the deprecated Twig 1 class names.
+
+kriswallsmith/assetic v1.4.0 is the last release of the package, so this can
+not be fixed by upgrading. It declares its Twig extension in terms of
+Twig_Extension and Twig_Extension_GlobalsInterface, and loading the latter
+makes Twig >= 2.7 emit "Using the Twig_Extension_GlobalsInterface class is
+deprecated". Both names are plain aliases of the classes used below, so the
+extension keeps working exactly the same.
+
+--- a/src/Assetic/Extension/Twig/AsseticExtension.php
++++ b/src/Assetic/Extension/Twig/AsseticExtension.php
+@@ -14,7 +14,7 @@
+ use Assetic\Factory\AssetFactory;
+ use Assetic\ValueSupplierInterface;
+ 
+-class AsseticExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
++class AsseticExtension extends \Twig\Extension\AbstractExtension implements \Twig\Extension\GlobalsInterface
+ {
+     protected $factory;
+     protected $functions;

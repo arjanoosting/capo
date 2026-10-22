@@ -7,67 +7,91 @@
         "psr-4": { "": "src/", "SymfonyStandard\\": "app/" }
     },
     "require": {
-        "php": "7.2.*",
+        "php": "7.4.*",
         "symfony/symfony": "2.8.*",
-        "doctrine/orm": "~2.3",
-        "doctrine/doctrine-bundle": "~1.6",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.8",
-	"symfony/var-dumper": "^2.8",
+        "doctrine/orm": "~2.5.14",
+        "doctrine/inflector": "~1.3.0",
+        "doctrine/doctrine-bundle": "~1.10.0",
+        "doctrine/doctrine-fixtures-bundle": "~2.4",
+        "symfony/assetic-bundle": "~2.8",
+        "symfony/swiftmailer-bundle": "~2.6",
+        "symfony/monolog-bundle": "~2.12",
+        "symfony/var-dumper": "^2.8",
+        "twig/twig": "^2.12",
         "sensio/distribution-bundle": "~4.0",
-        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/user-bundle": "2.0.*@dev",
-        "escapestudios/wsse-authentication-bundle": "dev-sf30",
-        "fr3d/ldap-bundle": "3.0.0",
+        "sensio/framework-extra-bundle": "~3.0,>=3.0.29",
+        "incenteev/composer-parameter-handler": "~2.1",
+        "friendsofsymfony/user-bundle": "~2.1.0",
+        "escapestudios/wsse-authentication-bundle": "~2.3",
+        "fr3d/ldap-bundle": "~3.0.2",
         "components/jquery": "1.11.*",
         "components/underscore": "dev-master",
-        "itbz/fpdf": "dev-master",
-        "setasign/fpdf": "1.8.1",
+        "setasign/fpdf": "1.8.2",
         "ivaynberg/select2": ">=3.5.1,<3.6.0",
         "spinjs/spinjs": "2.0.1",
         "select2-bootstrap/select2-bootstrap": "1.4.4",
         "jscrolljs/jscrolljs": "2.2.4",
         "components/bootstrap": "^3.3",
-        "robloach/component-installer": "^0.2.3",
-        "guzzlehttp/guzzle": "^6.2"
+        "composer/installers": "^2.0",
+        "oomphinc/composer-installers-extender": "^2.0",
+        "cweagans/composer-patches": "^1.7",
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "replace": {
+        "robloach/component-installer": "*"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "phpunit/phpunit": "~6.0",
+        "sensio/generator-bundle": "~2.5",
+        "phpunit/phpunit": "~7.5",
         "ext-pdo_sqlite": "*",
-        "symfony/phpunit-bridge": "^4.2"
+        "symfony/phpunit-bridge": "^4.4"
     },
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
         ],
+        "build-bootstrap": [
+            "@php vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/bin/build_bootstrap.php app app"
+        ],
+        "clear-cache": [
+            "@php app/console cache:clear --no-warmup"
+        ],
+        "install-assets": [
+            "@php app/console assets:install --relative web"
+        ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "@build-bootstrap",
+            "@clear-cache",
+            "@install-assets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "@build-bootstrap",
+            "@clear-cache",
+            "@install-assets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {
-        "component-dir": "web/components",
-        "component-baseurl": "components",
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true,
+            "cweagans/composer-patches": true,
+            "robloach/component-installer": false
+        },
+        "policy": {
+            "advisories": {
+                "block": false
+            }
         }
     },
     "extra": {
@@ -79,6 +103,26 @@
         },
         "branch-alias": {
             "dev-master": "2.7-dev"
+        },
+        "installer-types": [
+            "component"
+        ],
+        "installer-paths": {
+            "web/components/{$name}/": [
+                "type:component"
+            ]
+        },
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "doctrine/orm": {
+                "PHP 7.4 compatibility (backported from doctrine/orm 2.7)": "patches/doctrine-orm-2.5-php74.patch"
+            },
+            "doctrine/common": {
+                "PHP 7.4 compatibility (backported from doctrine/common 2.10)": "patches/doctrine-common-2.8-php74.patch"
+            },
+            "kriswallsmith/assetic": {
+                "Use the Twig 2 class names": "patches/assetic-1.4-twig2-class-names.patch"
+            }
         }
     },
     "repositories": [

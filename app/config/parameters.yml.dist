@@ -9,6 +9,8 @@ parameters:
     mailer_host: localhost
     mailer_user: null
     mailer_password: null
+    mailer_from_address: smittooling@vodafoneziggo.com
+    mailer_from_name: CactiPortal
     locale: en
     secret: 0c8848b632e29f989c134ea3d6dc19ad
     database_path: null
