@@ -24,5 +24,9 @@ install: ## Run composer install
 	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} composer1.phar install
 	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} app/console assetic:dump --env=prod --no-debug
 
+update: ## Run composer updatre
+	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} composer1.phar update
+	@cd ${DEPLOYMENTDIR} ; ${COMMANDPREFIX} ${PHP_REFERENCE} app/console assetic:dump --env=prod --no-debug
+
 test: ## Run unit tests
 	@cd ${DEPLOYMENTDIR}app ; ${COMMANDPREFIX} ${PHP_REFERENCE} ../vendor/bin/phpunit
