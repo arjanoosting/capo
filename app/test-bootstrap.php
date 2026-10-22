@@ -2,16 +2,19 @@
 
 if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
     passthru(sprintf(
-        'php "%s/console" cache:clear --env=%s --no-warmup',
+        '"%s" "%s/console" cache:clear --env=%s --no-warmup',
+        PHP_BINARY,
         __DIR__,
         $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
     ));
     passthru(sprintf(
-        'php "%s/console" doctrine:schema:create --env=test',
+        '"%s" "%s/console" doctrine:schema:create --env=test',
+        PHP_BINARY,
         __DIR__
     ));
     passthru(sprintf(
-        'php "%s/console" doctrine:fixtures:load -n --env=test',
+        '"%s" "%s/console" doctrine:fixtures:load -n --env=test',
+        PHP_BINARY,
         __DIR__
     ));
 }

@@ -8,7 +8,7 @@
 
         {% stylesheets output='css/styles.css' filter='cssrewrite'
          'components/bootstrap/css/bootstrap.min.css'
-         '../vendor/ivaynberg/select2/select2.css'
+         'components/select2/select2.css'
          '../vendor/select2-bootstrap/select2-bootstrap/select2-bootstrap.css'
          'bundles/gizmocapo/css/capo.css'
         %}
@@ -64,10 +64,10 @@
             {% block contents %}{% endblock %}
         </div><!-- /.container -->
         {% javascripts filter=''
-         '../vendor/components/jquery/jquery.min.js'
-         '../vendor/components/underscore/underscore-min.js'
+         'components/jquery/jquery.min.js'
+         'components/underscore/underscore-min.js'
          'components/bootstrap/js/bootstrap.js'
-         '../vendor/ivaynberg/select2/select2.js'
+         'components/select2/select2.js'
          '../vendor/spinjs/spinjs/spin.js'
          '../vendor/jscrolljs/jscrolljs/jquery.jscroll.js'
          'bundles/gizmocapo/js/capo.js'

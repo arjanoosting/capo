@@ -1,0 +1,150 @@
+Make doctrine/orm 2.5 quiet on PHP 7.4.
+
+doctrine/orm is pinned to 2.5 because every later release requires
+symfony/console ~3.0 while this application runs on Symfony 2.8. All hunks
+below are backports of fixes that are already part of doctrine/orm 2.7 and
+do not change behaviour:
+
+ * Query/Parser.php: Lexer::lookahead, Lexer::peek(), Lexer::glimpse() and
+   peekBeyondClosingParenthesis() all return null once the end of the DQL
+   string is reached. Reading an array offset from them raises the PHP 7.4
+   notice "Trying to access array offset on value of type null", which turns
+   into an exception as soon as notices are promoted to exceptions (PHPUnit,
+   Symfony debug), so any DQL ending in a literal, a LIKE or a parenthesised
+   condition breaks. Guard the accesses, the same way 2.7 does.
+
+ * UnitOfWork.php: "continue" inside a switch raises a warning since PHP 7.3.
+   It always behaved like "break" there, so use "break", which is what 2.7
+   ships.
+
+--- a/lib/Doctrine/ORM/Query/Parser.php
++++ b/lib/Doctrine/ORM/Query/Parser.php
+@@ -309,7 +309,7 @@
+      */
+     public function match($token)
+     {
+-        $lookaheadType = $this->lexer->lookahead['type'];
++        $lookaheadType = isset($this->lexer->lookahead['type']) ? $this->lexer->lookahead['type'] : null;
+ 
+         // short-circuit on first condition, usually types match
+         if ($lookaheadType !== $token && $token !== Lexer::T_IDENTIFIER && $lookaheadType <= Lexer::T_IDENTIFIER) {
+@@ -461,7 +461,7 @@
+     public function semanticalError($message = '', $token = null)
+     {
+         if ($token === null) {
+-            $token = $this->lexer->lookahead;
++            $token = ($this->lexer->lookahead !== null) ? $this->lexer->lookahead : array('position' => null);
+         }
+ 
+         // Minimum exposed chars ahead of token
+@@ -528,7 +528,7 @@
+      */
+     private function isMathOperator($token)
+     {
+-        return in_array($token['type'], array(Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_DIVIDE, Lexer::T_MULTIPLY));
++        return $token !== null && in_array($token['type'], array(Lexer::T_PLUS, Lexer::T_MINUS, Lexer::T_DIVIDE, Lexer::T_MULTIPLY));
+     }
+ 
+     /**
+@@ -543,7 +543,7 @@
+ 
+         $this->lexer->resetPeek();
+ 
+-        return ($lookaheadType >= Lexer::T_IDENTIFIER && $peek['type'] === Lexer::T_OPEN_PARENTHESIS);
++        return ($lookaheadType >= Lexer::T_IDENTIFIER && $peek !== null && $peek['type'] === Lexer::T_OPEN_PARENTHESIS);
+     }
+ 
+     /**
+@@ -838,7 +838,7 @@
+     {
+         $this->lexer->moveNext();
+ 
+-        switch ($this->lexer->lookahead['type']) {
++        switch (isset($this->lexer->lookahead['type']) ? $this->lexer->lookahead['type'] : null) {
+             case Lexer::T_SELECT:
+                 $statement = $this->SelectStatement();
+                 break;
+@@ -1437,7 +1437,7 @@
+         // We need to check if we are in a IdentificationVariable or SingleValuedPathExpression
+         $glimpse = $this->lexer->glimpse();
+ 
+-        if ($glimpse['type'] === Lexer::T_DOT) {
++        if ($glimpse !== null && $glimpse['type'] === Lexer::T_DOT) {
+             return $this->SingleValuedPathExpression();
+         }
+ 
+@@ -1481,7 +1481,7 @@
+                 $expr = $this->SimpleArithmeticExpression();
+                 break;
+ 
+-            case ($glimpse['type'] === Lexer::T_DOT):
++            case ($glimpse !== null && $glimpse['type'] === Lexer::T_DOT):
+                 $expr = $this->SingleValuedPathExpression();
+                 break;
+ 
+@@ -2452,9 +2452,11 @@
+         // Peek beyond the matching closing parenthesis ')'
+         $peek = $this->peekBeyondClosingParenthesis();
+ 
+-        if (in_array($peek['value'], array("=",  "<", "<=", "<>", ">", ">=", "!=")) ||
++        if ($peek !== null && (
++            in_array($peek['value'], array("=",  "<", "<=", "<>", ">", ">=", "!=")) ||
+             in_array($peek['type'], array(Lexer::T_NOT, Lexer::T_BETWEEN, Lexer::T_LIKE, Lexer::T_IN, Lexer::T_IS, Lexer::T_EXISTS)) ||
+-            $this->isMathOperator($peek)) {
++            $this->isMathOperator($peek)
++        )) {
+             $condPrimary->simpleConditionalExpression = $this->SimpleConditionalExpression();
+ 
+             return $condPrimary;
+@@ -2806,11 +2808,11 @@
+             case Lexer::T_IDENTIFIER:
+                 $peek = $this->lexer->glimpse();
+ 
+-                if ($peek['value'] == '(') {
++                if ($peek !== null && $peek['value'] == '(') {
+                     return $this->FunctionDeclaration();
+                 }
+ 
+-                if ($peek['value'] == '.') {
++                if ($peek !== null && $peek['value'] == '.') {
+                     return $this->SingleValuedPathExpression();
+                 }
+ 
+@@ -2826,7 +2828,7 @@
+             default:
+                 $peek = $this->lexer->glimpse();
+ 
+-                if ($peek['value'] == '(') {
++                if ($peek !== null && $peek['value'] == '(') {
+                     if ($this->isAggregateFunction($this->lexer->lookahead['type'])) {
+                         return $this->AggregateExpression();
+                     }
+@@ -3167,7 +3169,7 @@
+ 
+         $escapeChar = null;
+ 
+-        if ($this->lexer->lookahead['type'] === Lexer::T_ESCAPE) {
++        if ($this->lexer->lookahead !== null && $this->lexer->lookahead['type'] === Lexer::T_ESCAPE) {
+             $this->match(Lexer::T_ESCAPE);
+             $this->match(Lexer::T_STRING);
+ 
+--- a/lib/Doctrine/ORM/UnitOfWork.php
++++ b/lib/Doctrine/ORM/UnitOfWork.php
+@@ -2633,7 +2633,7 @@
+                         $class->reflFields[$field]->setValue($entity, $data[$field]);
+                         $this->originalEntityData[$oid][$field] = $data[$field];
+ 
+-                        continue;
++                        break;
+                     }
+ 
+                     $associatedId = array();
+@@ -2662,7 +2662,7 @@
+                         $class->reflFields[$field]->setValue($entity, null);
+                         $this->originalEntityData[$oid][$field] = null;
+ 
+-                        continue;
++                        break;
+                     }
+ 
+                     if ( ! isset($hints['fetchMode'][$class->name][$field])) {
