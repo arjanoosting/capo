@@ -1,3 +1,4 @@
+.idea/
 /web/bundles/
 /web/components/
 /web/css/
@@ -11,5 +12,5 @@
 /build/
 /vendor/
 /bin/
-/composer.phar
+/composer*.phar
 /app/var/sessions/sess_*
