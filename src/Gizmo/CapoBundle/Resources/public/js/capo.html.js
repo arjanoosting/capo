@@ -46,6 +46,7 @@ CAPO.html = CAPO.html || {};
             '<td class="cacti-instance" id="col-name-<%= id %>"></td>' +
             '<td class="base-url" id="col-base-url-<%= id %>"></td>' +
             '<td class="<%= import_date_class %>"><%= import_date %></td>' +
+            '<td class="<%= version_class %>"><%= version %></td>' +
             '<td class="queue-import"><a id="btn-queue-ci-<%= id %>" class="btn btn-<%= queue_btn_class %>"><span id="icon-queue-ci-<%= id %>" class="glyphicon glyphicon-<%= queue_icon %> icon-white"></span></a></td>' +
             '<td class="status-active"><a id="btn-activate-ci-<%= id %>" class="btn btn-<%= activate_btn_class %>"><span id="icon-activate-ci-<%= id %>" class="glyphicon glyphicon-<%= activate_icon %> icon-white"></span></a></td>' +
             '</tr>';

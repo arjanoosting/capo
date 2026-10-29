@@ -23,6 +23,8 @@ $protocol = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 
 $base_url = $protocol . $_SERVER['HTTP_HOST'] . $url_path;
 
+$versions = db_fetch_assoc('SELECT version FROM version');
+
 $hosts = db_fetch_assoc('SELECT id, description, hostname FROM host');
 $host_ids = Array();
 foreach ($hosts as $host) {
@@ -40,6 +42,33 @@ printf("$sql;\n", $base_url);
 /**
  * Retrieve data and store in temporary tables
  */
+
+$sql = '
+CREATE TEMPORARY TABLE
+    tmp_version (
+        cacti_instance_id int(11) unsigned,
+        version char(20)
+    )';
+
+print $sql . ";\n";
+if (count($versions) > 0) {
+    $sql = '
+INSERT INTO
+    tmp_version (
+        cacti_instance_id, version
+    )
+VALUES
+';
+    for ($i=0; $i<count($versions); $i++) {
+        $version = $versions[$i];
+        $sql_tpl = '(@ci_id, "%s")';
+        $sql .= sprintf($sql_tpl, $version['version']);
+        if ($i < count($versions)-1) {
+            $sql .= ",\n";
+        }
+    }
+    print $sql . ";\n";
+}
 
 // create temporary hosts table to store temporary original data
 $sql = '
@@ -210,6 +239,12 @@ VALUES
 /**
  * Insert / update new data
  */
+$sql = '
+UPDATE cacti_instance i JOIN tmp_version v on i.id = v.cacti_instance_id
+SET i.version = v.version
+;';
+
+print $sql . "\n";
 
 // insert / update graph templates
 $sql = '

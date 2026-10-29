@@ -96,6 +96,13 @@ class CactiInstance
     protected $queue_import = False;
 
     /**
+     * @var string $version
+     *
+     * @ORM\Column(name="version", type="string", length=20, nullable=true)
+     */
+    protected $version;
+
+    /**
      * @var \DateTime $import_date
      *
      * @ORM\Column(name="import_date", type="datetime")
@@ -335,5 +342,15 @@ class CactiInstance
     public function getImportDate()
     {
         return $this->import_date;
+    }
+
+    /**
+     * Get the Cacti version of this instance
+     *
+     * @return null|string
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 }

@@ -175,6 +175,7 @@ CAPO.settings.cacti_instances = CAPO.settings.cacti_instances || {};
                         .replace(/[-,:\s]/g, ',').split(',');
                     var import_date = Date.UTC(d[0], d[1]-1, d[2], d[3], d[4]);
                     var import_date_class = 'import_date';
+                    var version_class = 'version';
                     var queue_btn_class = 'success';
                     var activate_btn_class = 'success';
                     var queue_icon = 'ok';
@@ -188,6 +189,12 @@ CAPO.settings.cacti_instances = CAPO.settings.cacti_instances || {};
                     if (cacti_instance.import_date.date !== '1970-01-01 00:00:00') {
                         str_import_date = cacti_instance.import_date.date;
                     }
+
+                    var str_version = 'unknown';
+                    if (cacti_instance.version !== null) {
+                        str_version = cacti_instance.version;
+                    }
+
 
                     if (cacti_instance.queue_import !== true) {
                         queue_btn_class = 'danger';
@@ -205,6 +212,8 @@ CAPO.settings.cacti_instances = CAPO.settings.cacti_instances || {};
                             'name': cacti_instance.name,
                             'import_date': str_import_date,
                             'import_date_class': import_date_class,
+                            'version' : str_version,
+                            'version_class': version_class,
                             'queue_btn_class': queue_btn_class,
                             'activate_btn_class': activate_btn_class,
                             'queue_icon': queue_icon,
