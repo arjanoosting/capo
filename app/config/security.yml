@@ -33,6 +33,7 @@ security:
 
     firewalls:
         wsse_secured:
+          logout_on_user_change: true
           pattern: /srv/.*
           provider: apiuser_provider
           wsse:
@@ -40,10 +41,12 @@ security:
             profile: "UsernameToken" #WSSE profile (WWW-Authenticate)
 
         login:
+            logout_on_user_change: true
             pattern: ^/login$
             anonymous: ~
 
         main:
+            logout_on_user_change: true
             pattern: ^/
             form_login:
             #    always_use_default_target_path: false

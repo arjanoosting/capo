@@ -34,7 +34,6 @@
 	"twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
         "phpunit/phpunit": "~6.0",
         "ext-pdo_sqlite": "*",
         "symfony/phpunit-bridge": "^4.2"

@@ -20,7 +20,7 @@
 namespace Gizmo\CapoBundle\Services;
 
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
@@ -40,7 +40,7 @@ class EventLogService
      * @param Doctrine        $doctrine
      * @param bool            $enabled
      */
-    public function __construct(TokenStorage $tokenStorage, Doctrine $doctrine, $enabled = false)
+    public function __construct(TokenStorageInterface $tokenStorage, Doctrine $doctrine, $enabled = false)
     {
         $this->tokenStorage = $tokenStorage;
         $this->em = $doctrine->getManager();

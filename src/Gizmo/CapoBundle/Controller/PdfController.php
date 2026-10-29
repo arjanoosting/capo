@@ -26,11 +26,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use \Gizmo\CapoBundle\Services\PDFService;
-use \Gizmo\CapoBundle\Model\PredefinedTimespan;
+use Gizmo\CapoBundle\Model\PredefinedTimespan;
+use Gizmo\CapoBundle\Services\EventLogService;
+use Gizmo\CapoBundle\Services\PDFService;
+use Gizmo\CapoBundle\Services\XmlConversionService;
 
 class PdfController extends BaseController
 {
+    private $pdf_exporter;
+
+    public function __construct(XmlConversionService $xml_conversion, EventLogService $event_logger, PdfService $pdf_exporter)
+    {
+        parent::__construct($xml_conversion, $event_logger);
+        $this->pdf_exporter = $pdf_exporter;
+    }
+
     /**
      * Initialize PDF Service
      *
@@ -38,13 +48,12 @@ class PdfController extends BaseController
      */
     protected function _initPdf()
     {
-        $pdf = $this->get('pdf_exporter');
-        $pdf->AliasNbPages();
-        $pdf->setAutoPageBreak(true);
-        $pdf->AddPage();
-        $pdf->SetFont('Arial','',10);
+        $this->pdf_exporter->AliasNbPages();
+        $this->pdf_exporter->setAutoPageBreak(true);
+        $this->pdf_exporter->AddPage();
+        $this->pdf_exporter->SetFont('Arial','',10);
 
-        return $pdf;
+        return $this->pdf_exporter;
     }
 
     /**

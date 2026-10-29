@@ -24,6 +24,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Gizmo\CapoBundle\Services\XmlConversionService;
+use Gizmo\CapoBundle\Services\EventLogService;
 
 /**
  * Capo Base controller
@@ -35,6 +37,14 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class BaseController extends Controller
 {
     protected $_privileges = null;
+    private $xml_conversion;
+    private $event_logger;
+
+    public function __construct(XmlConversionService $xml_conversion, EventLogService $event_logger)
+    {
+        $this->xml_conversion = $xml_conversion;
+        $this->event_logger = $event_logger;
+    }
 
     /**
      * Determine environment
@@ -153,8 +163,7 @@ abstract class BaseController extends Controller
      */
     protected function _log_event($str_function, $str_args, $message=null)
     {
-        $logger = $this->get('event_logger');
-        $logger->log(get_class($this), $str_function, $str_args, $message);
+        $this->event_logger->log(get_class($this), $str_function, $str_args, $message);
     }
 
     /**
@@ -231,8 +240,7 @@ abstract class BaseController extends Controller
     protected function _encoded_response(Array $array_input, $format, $code=200)
     {
         if ($format === 'xml') {
-            $xml = $this->get('xml_conversion');
-            $xml->parseArray($array_input);
+            $this->xml_conversion->parseArray($array_input);
             return new Response($xml->toString(), $code);
         } else {
             return new JsonResponse($array_input, $code);
