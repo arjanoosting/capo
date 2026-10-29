@@ -23,7 +23,7 @@ $protocol = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 
 $base_url = $protocol . $_SERVER['HTTP_HOST'] . $url_path;
 
-$versions = db_fetch_assoc('SELECT version FROM version');
+$versions = db_fetch_assoc('SELECT cacti FROM version');
 
 $hosts = db_fetch_assoc('SELECT id, description, hostname FROM host');
 $host_ids = Array();
@@ -47,7 +47,7 @@ $sql = '
 CREATE TEMPORARY TABLE
     tmp_version (
         cacti_instance_id int(11) unsigned,
-        version char(20)
+        cacti char(20)
     )';
 
 print $sql . ";\n";
@@ -55,14 +55,14 @@ if (count($versions) > 0) {
     $sql = '
 INSERT INTO
     tmp_version (
-        cacti_instance_id, version
+        cacti_instance_id, cacti
     )
 VALUES
 ';
     for ($i=0; $i<count($versions); $i++) {
         $version = $versions[$i];
         $sql_tpl = '(@ci_id, "%s")';
-        $sql .= sprintf($sql_tpl, $version['version']);
+        $sql .= sprintf($sql_tpl, $version['cacti']);
         if ($i < count($versions)-1) {
             $sql .= ",\n";
         }
@@ -241,7 +241,7 @@ VALUES
  */
 $sql = '
 UPDATE cacti_instance i JOIN tmp_version v on i.id = v.cacti_instance_id
-SET i.version = v.version
+SET i.version = v.cacti
 ;';
 
 print $sql . "\n";
