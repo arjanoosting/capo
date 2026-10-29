@@ -30,7 +30,7 @@
         "components/bootstrap": "^3.3",
         "robloach/component-installer": "^0.2.3",
         "guzzlehttp/guzzle": "^6.2",
-        "ldaptools/ldaptools-bundle": "^0.9.2",
+        "ldaptools/ldaptools-bundle": "dev-master",
 	"twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
@@ -77,6 +77,14 @@
         }
     },
     "repositories": [
+    {
+            "type": "vcs",
+            "url": "https://github.com/arjanoosting/ldaptools-bundle"
+    },
+    {
+            "type": "vcs",
+            "url": "https://github.com/arjanoosting/ldaptools"
+    },
     {
             "type": "package",
             "package": {

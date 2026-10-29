@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "754047f08479e106fd917224e776b93a",
+    "content-hash": "c87c13d09d1a2b3342bed24666485bb6",
     "packages": [
         {
             "name": "brick/math",
@@ -2309,12 +2309,12 @@
             "version": "v0.25.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ldaptools/ldaptools.git",
+                "url": "https://github.com/arjanoosting/ldaptools.git",
                 "reference": "18ec773284cdbf5f22cadeb1d85bcaf46c05df39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ldaptools/ldaptools/zipball/18ec773284cdbf5f22cadeb1d85bcaf46c05df39",
+                "url": "https://api.github.com/repos/arjanoosting/ldaptools/zipball/18ec773284cdbf5f22cadeb1d85bcaf46c05df39",
                 "reference": "18ec773284cdbf5f22cadeb1d85bcaf46c05df39",
                 "shasum": ""
             },
@@ -2367,16 +2367,16 @@
         },
         {
             "name": "ldaptools/ldaptools-bundle",
-            "version": "0.9.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ldaptools/ldaptools-bundle.git",
-                "reference": "eaa445aa551c321b9689614ac32101c3e3cf0298"
+                "url": "https://github.com/arjanoosting/ldaptools-bundle.git",
+                "reference": "857aac903749a373e8d2ac744038ba9df12343fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ldaptools/ldaptools-bundle/zipball/eaa445aa551c321b9689614ac32101c3e3cf0298",
-                "reference": "eaa445aa551c321b9689614ac32101c3e3cf0298",
+                "url": "https://api.github.com/repos/arjanoosting/ldaptools-bundle/zipball/857aac903749a373e8d2ac744038ba9df12343fc",
+                "reference": "857aac903749a373e8d2ac744038ba9df12343fc",
                 "shasum": ""
             },
             "require": {
@@ -2400,7 +2400,6 @@
                     "LdapTools\\Bundle\\LdapToolsBundle\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2414,12 +2413,15 @@
             "description": "Provides easy LDAP integration for Symfony via LdapTools.",
             "homepage": "http://github.com/ldaptools/LdapToolsBundle",
             "keywords": [
+                "Active Directory",
+                "LDAP",
                 "Microsoft Exchange",
-                "active directory",
-                "ldap",
-                "openldap"
+                "OpenLDAP"
             ],
-            "time": "2018-06-07T22:01:44+00:00"
+            "support": {
+                "source": "https://github.com/arjanoosting/ldaptools-bundle/tree/master"
+            },
+            "time": "2022-11-17T12:20:51+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6329,7 +6331,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "escapestudios/wsse-authentication-bundle": 20,
-        "components/underscore": 20
+        "components/underscore": 20,
+        "ldaptools/ldaptools-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
