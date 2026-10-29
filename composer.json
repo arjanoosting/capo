@@ -4,20 +4,21 @@
     "type": "project",
     "description": "Webbased frontend and API for multiple Cacti instances",
     "autoload": {
-        "psr-4": { "": "src/", "SymfonyStandard\\": "app/" }
+        "psr-4": { "": "src/", "SymfonyStandard\\": "app/" },
+	"classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
         "php": "7.2.*",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.6",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
+        "symfony/symfony": "3.4.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-fixtures-bundle": "~2.3",
         "symfony/assetic-bundle": "~2.3",
-        "symfony/monolog-bundle": "^3.0.2",
-	"symfony/var-dumper": "^2.8",
-        "sensio/distribution-bundle": "~4.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
+        "symfony/monolog-bundle": "^3.1.0", 
+	"symfony/var-dumper": "^3.4",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^5.0.0",
+        "incenteev/composer-parameter-handler": "^2.0",
         "escapestudios/wsse-authentication-bundle": "dev-sf30",
         "components/jquery": "1.11.*",
         "components/underscore": "dev-master",
@@ -29,35 +30,29 @@
         "components/bootstrap": "^3.3",
         "robloach/component-installer": "^0.2.3",
         "guzzlehttp/guzzle": "^6.2",
-        "ldaptools/ldaptools-bundle": "dev-master"
+        "ldaptools/ldaptools-bundle": "^0.9.2",
+	"twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
+        "sensio/generator-bundle": "^3.0",
         "phpunit/phpunit": "~6.0",
         "ext-pdo_sqlite": "*",
         "symfony/phpunit-bridge": "^4.2"
     },
     "scripts": {
-        "post-root-package-install": [
-            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "@symfony-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "@symfony-scripts"
         ]
     },
     "config": {
@@ -69,24 +64,19 @@
     },
     "extra": {
         "symfony-app-dir": "app",
+	"symfony-bin-dir": "bin",
+	"symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "2.7-dev"
+            "dev-master": "3.4-dev"
         }
     },
     "repositories": [
-    {
-            "type": "vcs",
-            "url": "https://github.com/arjanoosting/ldaptools-bundle"
-    },
-    {
-            "type": "vcs",
-            "url": "https://github.com/arjanoosting/ldaptools"
-    },
     {
             "type": "package",
             "package": {
