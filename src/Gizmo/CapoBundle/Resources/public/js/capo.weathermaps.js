@@ -102,7 +102,7 @@ CAPO.weathermaps = CAPO.weathermaps || {};
                 'wmap_id': wmap.id,
                 'wmap_name': wmap.titlecache,
                 'ci_name': wmap.cacti_instance.name,
-                'hlink_uri': wmap.cacti_instance.base_url + 'plugins/weathermap/weathermap-cacti-plugin.php?action=viewmap&id=' + wmap.filehash,
+                'hlink_uri': hlink_uri,
                 'hlink_img': ns.get('base_url') + 'api/show_wmap/' + wmap.id + '/',
                 'hlink_title': wmap.cacti_instance.name +' - ' + wmap.titlecache
             })
